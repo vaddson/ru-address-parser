@@ -20,10 +20,8 @@
   почтового адреса, как то: область, город, район и т.д. до номера
   дома.
 
-  /Идеи и приемы по созданию аппликативного парсера были взяты из этой презентации:/
-
-  /[[https://speakerdeck.com/dmitrytsepelev/applikativnoie-proghrammirovaniie-ili-kak-parsit-sql-na-chistom-haskell][Аппликативное программирование или как парсить SQL на чистом Haskell]]/
-
+  /Идеи и приемы по созданию аппликативного парсера были взяты из этой презентации:/ \\
+  [[https://speakerdeck.com/dmitrytsepelev/applikativnoie-proghrammirovaniie-ili-kak-parsit-sql-na-chistom-haskell][Аппликативное программирование или как парсить SQL на чистом Haskell]] \\
   /Спасибо автору за четко и ясно изложенный материал!/
 
   Пример текста с адресом дома: \\
