@@ -1,4 +1,4 @@
-#+title: Пасрер российских адресов
+#+title: Парсер городских адресов из текста в JSON
 #+subtitle: ru-address-parser
 #+startup: content
 
