@@ -60,36 +60,31 @@ addressDataHouseInt ad = maybeInt =<< addressDataHouse ad
           ints       = filter (/="") . words . replace
           replace    = map (\c -> if isDigit c then c else ' ')
 
-fromJustSafe :: Maybe a -> a -> a
-fromJustSafe (Just x) _ = x
-fromJustSafe Nothing d  = d
-
 quoteString :: String -> String
 quoteString x = "'" ++ x ++ "'"
 
 instance Show AddressData where
-    show ad = "country='"        ++ fromJustSafe (addressDataCountry ad) ""
-              ++ "', subcountry=[" ++ listToStr (fromJustSafe (addressDataSubcountry ad)
-                                                              [])
-              ++ "], town='"     ++ fromJustSafe (addressDataTown ad) ""
-              ++ "', subtown=["  ++ listToStr (fromJustSafe (addressDataSubtown ad) [])
-              ++ "], realTown='" ++ fromJustSafe (adderessDataRealTown ad) ""
-              ++ "', street='"   ++ fromJustSafe (addressDataStreet ad) ""
+    show ad = "country='"        ++ fromMaybe "" (addressDataCountry ad)
+              ++ "', subcountry=[" ++ listToStr (fromMaybe []
+                                                           (addressDataSubcountry ad))
+              ++ "], town='"     ++ fromMaybe "" (addressDataTown ad)
+              ++ "', subtown=["  ++ listToStr (fromMaybe [] (addressDataSubtown ad))
+              ++ "], realTown='" ++ fromMaybe "" (adderessDataRealTown ad)
+              ++ "', street='"   ++ fromMaybe "" (addressDataStreet ad)
               ++ "', house=["
-              ++ intercalate ", " (map quoteString (fromJustSafe (addressDataHouse ad)
-                                                                 []))
-              ++ "], houseInt="  ++ show (fromJustSafe (addressDataHouseInt ad) 0)
+              ++ intercalate ", " (maybe [] (map quoteString) (addressDataHouse ad))
+              ++ "], houseInt="  ++ show (fromMaybe 0 (addressDataHouseInt ad))
 
 showAddressData :: AddressData -> String
-showAddressData ad = "country    = '" ++ fromJustSafe (addressDataCountry ad) ""
-    ++ "'\nsubcountry = [" ++ listToStr (fromJustSafe (addressDataSubcountry ad) [])
-    ++ "]\ntown       = '" ++ fromJustSafe (addressDataTown ad) ""
-    ++ "'\nsubtown    = [" ++ listToStr (fromJustSafe (addressDataSubtown ad) [])
-    ++ "]\nrealTown   = '" ++ fromJustSafe (adderessDataRealTown ad) ""
-    ++ "'\nstreet     = '" ++ fromJustSafe (addressDataStreet ad) ""
+showAddressData ad = "country    = '" ++ fromMaybe "" (addressDataCountry ad)
+    ++ "'\nsubcountry = [" ++ listToStr (fromMaybe [] (addressDataSubcountry ad))
+    ++ "]\ntown       = '" ++ fromMaybe "" (addressDataTown ad)
+    ++ "'\nsubtown    = [" ++ listToStr (fromMaybe [] (addressDataSubtown ad))
+    ++ "]\nrealTown   = '" ++ fromMaybe "" (adderessDataRealTown ad)
+    ++ "'\nstreet     = '" ++ fromMaybe "" (addressDataStreet ad)
     ++ "'\nhouse      = ["
-    ++ intercalate ", " (map quoteString (fromJustSafe (addressDataHouse ad) []))
-    ++ "]\nhouseInt   = " ++ show (fromJustSafe (addressDataHouseInt ad) 0)
+    ++ intercalate ", " (maybe [] (map quoteString) (addressDataHouse ad))
+    ++ "]\nhouseInt   = " ++ show (fromMaybe 0 (addressDataHouseInt ad))
 
 def :: AddressData
 def = AddressData { addressDataCountry    = Nothing
