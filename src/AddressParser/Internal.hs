@@ -151,9 +151,10 @@ houseNumberParts = checkNot (district <|> area <|> highway)
                    <* endOfHouseWord
     where var1 = houseNumberPart <:> many oneMore
           var2 = (("дом " ++) <$> complexBlockNumber) <:> many oneMore
-          varLikeYandex = (("дом " ++) <$> number)
+          varLikeYandex = (("дом " ++) <$> (fraction <|> number))
                           <:> ((houseKey <++> whitespace <++> complexBlockNumber)
                                <:> many oneMore)
+          fraction = blockNumber <++> ((char '/' <|> char '-') <:> number)
           oneMore = separatorHouse *> houseNumberPart
 
 houseNumber :: Parser String
