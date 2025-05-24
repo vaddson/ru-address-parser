@@ -304,7 +304,7 @@ tests = TestList [
         parse streetNameWithKilometre "октябрьская железная дорога, москва-санкт-петербург, 10-ый километр"
 
     , unitTest "streetNameWithKilometre 'мжд, киевское, 2-ой километр'" $
-        assertEqual "" (Right ("", "мжд, киевское, 2-й километр")) $
+        assertEqual "" (Right ("", "мЖД, киевское, 2-й километр")) $
         parse streetNameWithKilometre "мжд, киевское, 2-ой километр"
 
     , unitTest "streetNameWithKilometre '19-й километр московской кольцевой автодороги'" $
@@ -312,7 +312,7 @@ tests = TestList [
         parse streetNameWithKilometre "19-й километр московской кольцевой автодороги"
 
     , unitTest "streetNameWithKilometre '19-й километр мкад'" $
-        assertEqual "" (Right ("", "19-й километр мкад")) $
+        assertEqual "" (Right ("", "19-й километр мкАД")) $
         parse streetNameWithKilometre "19-й километр мкад"
 
     , unitTest "streetNameWithKilometre 'малое кольцо московской железной дороги, 54-й километр'" $
@@ -324,7 +324,7 @@ tests = TestList [
         parse streetNameWithKilometre "калужское шоссе, 20-й километр"
 
     , unitTest "streetNameWithKilometre 'мкад, 47-й километр нечто'" $
-        assertEqual "" (Right (" нечто", "мкад, 47-й километр")) $
+        assertEqual "" (Right (" нечто", "мкАД, 47-й километр")) $
         parse streetNameWithKilometre "мкад, 47-й километр нечто"
 
     , unitTest "streetName 'ул.алексеевский пр-т'" $
@@ -582,7 +582,7 @@ tests = TestList [
     , unitTest "address 'мжд киевское 2-й километр вл8'" $
         assertEqual "" (Right ( ""
                               , AddressData Nothing Nothing Nothing Nothing
-                                  (Just "мжд, киевское, 2-й километр")
+                                  (Just "мЖД, киевское, 2-й километр")
                                   (Just ["владение 8"]))) $
         parse address "мжд киевское 2-й километр вл8"
 
