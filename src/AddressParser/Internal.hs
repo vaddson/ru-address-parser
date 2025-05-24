@@ -147,13 +147,16 @@ houseNumberPart = houseKey <++> whitespace <++> complexBlockNumber
 
 houseNumberParts :: Parser [String]
 houseNumberParts = checkNot (district <|> area <|> highway)
-                   *> (var1 <|> varLikeYandex <|> var2)
+                   *> (varLikeYandex1 <|> varLikeYandex2 <|> var1 <|> var2)
                    <* endOfHouseWord
     where var1 = houseNumberPart <:> many oneMore
           var2 = (("дом " ++) <$> complexBlockNumber) <:> many oneMore
-          varLikeYandex = (("дом " ++) <$> (fraction <|> number))
-                          <:> ((houseKey <++> whitespace <++> complexBlockNumber)
-                               <:> many oneMore)
+          varLikeYandex1 = (("дом " ++) <$> (fraction <|> number))
+                           <:> ((houseKey <++> whitespace <++> complexBlockNumber)
+                                <:> many oneMore)
+          varLikeYandex2 = (houseKey <++> whitespace <++> (fraction <|> number))
+                           <:> ((houseKey <++> ((" " ++) <$> complexBlockNumber))
+                                <:> many oneMore)
           fraction = blockNumber <++> ((char '/' <|> char '-') <:> number)
           oneMore = separatorHouse *> houseNumberPart
 
@@ -453,14 +456,14 @@ railway = ((string "железной" <++> whitespace1 <++> string "дороги
           <* endOfEssenceKey
 
 railwayShortening :: Parser String
-railwayShortening = (many (checkNot (string "жд") *> ruLetter) <++> string "жд")
+railwayShortening = (many (checkNot (string "ЖД") *> ruLetter) <++> string "ЖД")
                     <* endOfEssenceKey
 
 autoRoad :: Parser String
 autoRoad = (string "автодороги" <|> string "автодорога") <* endOfEssenceKey
 
 autoRoadShortening :: Parser String
-autoRoadShortening = (many (checkNot (string "ад") *> ruLetter) <++> string "ад")
+autoRoadShortening = (many (checkNot (string "АД") *> ruLetter) <++> string "АД")
                      <* endOfEssenceKey
 
 kilometreNumber :: Parser String
