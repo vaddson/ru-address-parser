@@ -478,6 +478,13 @@ tests = TestList [
                                   (Just ["дом 1"]))) $
         parse address "некий проезд № 7 1"
 
+    , unitTest "address 'нек. проезд № 7 1" $
+        assertEqual "" (Right ( ""
+                              , AddressData Nothing Nothing Nothing Nothing
+                                  (Just "нек. проезд № 7")
+                                  (Just ["дом 1"]))) $
+        parse address "нек. проезд № 7 1"
+
     , unitTest "address 'некий проезд № 7 1 and something else" $
         assertEqual "" (Right ( " and something else"
                               , AddressData Nothing Nothing Nothing Nothing

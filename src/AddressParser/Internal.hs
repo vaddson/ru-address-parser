@@ -291,10 +291,10 @@ endOfRuWord = Parser p
                    | otherwise = Left "unexpected end of street key"
 
 ruWord :: Parser String
-ruWord = many (checkNot numerical *> ruLetter) <* endOfRuWord
+ruWord = many (checkNot numerical *> ruLetter) <++> option (string ".") <* endOfRuWord
 
 ruWord1 :: Parser String
-ruWord1 = many1 (checkNot numerical *> ruLetter) <* endOfRuWord
+ruWord1 = many1 (checkNot numerical *> ruLetter) <++> option (string ".") <* endOfRuWord
 
 quotedText :: Parser String
 quotedText = quote '"' <|> quote '\''
